@@ -1,0 +1,57 @@
+body { behavior: url("css/csshover2.htc"); }
+img, .corners em.tl, .corners em.tr, .corners em.bl, .corners em.br, p { behavior: url("css/iepngfix.htc"); }
+
+/*
+	IE hacks
+	------------------------
+	
+	#hack {
+		color:	green;	( all browsers )
+		color/**/:blue; ( IE 5.5 ) 
+		c\olor:	red;	( IE 6 ) escape must not precede any of the first six alphabetical characters: a, b, c, d, e, f
+		_color: red;	( IE 6 )
+		*color: red;	( IE6, IE7 )
+		
+	}
+
+	IE min-width & max-width
+	------------------------
+	
+	element {
+		min-width: 780px; 
+    	max-width: 1260px; 
+		width: expression(document.body.clientWidth < 781? "780px" : document.body.clientWidth > 1261? "1260px" : "auto");
+	}
+	
+	IE PNG background
+	------------------------
+	src='/images/png-image.png' - path relative of page
+	
+	element {
+		background: none;
+		filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/png-image.png', sizingMethod='scale');
+	}
+
+*/
+
+.cc { font-size: 0px; overflow: hidden; height: 0px; }
+
+.content .f-inputs { padding-left: 0; height: 1%; }
+.content .f-actions { padding-left: 30%; }
+
+.container, .columns,
+.content .f-actions,
+.menu-h, .layout-box,
+.menu-v-d a,
+.menu-h-d,
+.menu-h-d li,
+.menu-h-d ul li a,
+.corners, .corners em.tl, .corners em.tr, .corners em.bl, .corners em.br { zoom: 1; } /* hasLayout ON */
+
+.corners em.tr, .corners em.br { margin-left: 100%; left: -10px; }
+
+.menu-v-d ul { margin-left: -1px; }
+.menu-h-d li li { float: left; }
+
+.page-layout .container { float: left; width: 100%; zoom: 1; height: 1%; display: block; }
+.layout-box {  }

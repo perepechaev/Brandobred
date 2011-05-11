@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TemplateXml>
+    <area name="PollingTemplateComponent">
+        <template name="drawItem">
+            <param>
+                <item name="polling">
+                    <reference name="id"        field="id"       />
+                    <reference name="question"  field="question" />
+                    <reference name="answers"   field="answers"  />
+                    <reference name="voteUrl"   field="id"  modifiers="link:polling:vote:{field}" />
+                </item>
+                <item name="wrapperClass"/>
+            </param>
+            <content><![CDATA[
+                <h1>{@question}</h1>
+                <div>
+                    <form action="{@voteUrl}" method="post" class="polling-vote">
+                        <input type="hidden" name="poll_id" value="{@id}" />
+                            {answers()}
+                    	<input type="submit" class="button" value="Голосовать"/>
+                    </form>
+                </div>
+            ]]></content>
+            <functions>
+                <item name="answers" data="polling->answers" class="loop" template="answer" empty="emptyAnswer" />
+            </functions>
+        </template>
+
+        <template name="answer">
+            <param>
+                <item name="item">
+                    <reference name="id"            field="id"       />
+                    <reference name="polling_id"    field="poll_id"       />
+                    <reference name="answer"        field="title"   />
+                </item>
+            </param>
+            <content><![CDATA[
+                <div>
+                    <input id="polling_answer_{@polling_id}_{@id}" type="checkbox" name="answer_id[]" value="{@id}"/>
+                    <label for="polling_answer_{@polling_id}_{@id}">{@answer}</label>
+                </div>
+            ]]></content>
+        </template>
+        
+        <template name="emptyAnswer">
+            <content><![CDATA[
+                <p class="error">Вопросы в опросе не найдены</p>
+            ]]></content>
+        </template>
+
+        <template name="result">
+            <param>
+                <item name="polling">
+                    <reference name="id"        field="id"       />
+                    <reference name="question"  field="question" />
+                    <reference name="answers"   field="answers"  />
+                    <reference name="foot"      field="htmlResultFoot" />
+                </item>
+            </param>
+            <content><![CDATA[
+                <h1>Опрос</h1>
+                <h4>{@question}</h4>
+                <ul>
+                {answers()}
+                </ul>
+                {@foot}
+            ]]></content>
+            <functions>
+                <item name="answers" data="polling->answers" class="loop" template="resultItem" />
+            </functions>
+        </template>
+
+        <template name="resultItem">
+            <param>
+                <item name="items">
+                    <reference name="id"        field="id"       />
+                    <reference name="answer"    field="answer"   />
+                    <reference name="count"     field="count"    />
+                </item>
+            </param>
+            <content><![CDATA[
+                <li>
+                    <div style="float: right;">{@count}</div>
+                    {@answer}
+                </li>
+            ]]></content>
+        </template>
+
+        <template name="alreadyVote">
+            <param>
+                <item name="answer"     />
+                <item name="question"   />
+            </param>
+            <content><![CDATA[
+                <p>Извините, но вы уже проголосовали за &laquo;<i>{$answer}</i>&raquo;.
+                Попробуйте позже.</p>
+            ]]></content>
+        </template>
+
+        <template name="editPolling">
+            <param>
+                <item name="polling">
+                    <reference name="id"        field="id"           />
+                    <reference name="question"  field="questionHtml" />
+                    <reference name="answers"   field="answers"      />
+                    <reference name="storeUrl"  field="storeUrl"     />
+                </item>
+            </param>
+            <content><![CDATA[
+                <h1>Опрос</h1>
+                <form action="{@storeUrl}" method="post">
+                    <h4>Вопрос:</h4>
+                    <input type="text" name="question" value="{@question}" class="polling-input"/>
+                    <h4>Варинаты ответов:</h4>
+                    {answers()}
+                    <input type="submit" class="button" value="Сохранить"/>
+                    <input type="button" class="button" value="Отмена" onclick="JavaScript: window.history.back();"/>
+                </form>
+            ]]></content>
+            <functions>
+                <item name="answers" data="polling->answers" class="loop" template="editItem" />
+            </functions>
+        </template>
+
+        <template name="editItem">
+            <param>
+                <item name="items">
+                    <reference name="id"        field="formId"           />
+                    <reference name="answer"    field="answerHtml"   />
+                </item>
+            </param>
+            <content><![CDATA[
+                <input type="text" name="answers[{@id}]" value="{@answer}" class="polling-input-answer"/>
+            ]]></content>
+        </template>
+
+    </area>
+</TemplateXml>

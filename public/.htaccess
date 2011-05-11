@@ -1,0 +1,11 @@
+    RewriteEngine On
+    RewriteBase /
+
+    RewriteCond %{REQUEST_URI} !^/img/
+    RewriteCond %{REQUEST_URI} !^/css/
+    RewriteCond %{REQUEST_URI} !^/js/
+    RewriteCond %{REQUEST_URI} !^/i/
+    
+    RewriteCond %{REQUEST_URI} !^/(.*)\.(php|txt|ico|png|tar)
+    RewriteRule . /index.php    [L]
+

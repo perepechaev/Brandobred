@@ -1,0 +1,17 @@
+From: <?=$from."\r\n"?>
+To: <?=$user->mail."\r\n"?>
+Subject: Вы зарегистрированы на интернет аукционе Лепрекон
+Content-type: text/html; charset=utf-8
+Return-path: <<?=$from ?>>
+
+<html>
+<body>
+<p><b>Регистрационные данные:</b><br>
+Имя: <?=$user->name?><br>
+Логин: <?=$user->login?><br></p>
+
+<p><b>Для подтверждения регистрации перейдите по ссылке</b></p><br>
+
+<p><a href="<?=$link?>">подтверждение</a></p>
+</body>
+</html>

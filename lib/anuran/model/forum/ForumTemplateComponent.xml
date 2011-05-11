@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TemplateXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../core/TemplateSchema.xsd">
+    <area name="ForumTemplateComponent">
+
+        <template name="ForumList">
+            <param>
+                <item name="forums"/>
+                <item name="group">
+                    <reference name="title"     field="htmlTitle"/>
+                    <reference name="control"   field="htmlFoot"/>
+                </item>
+            </param>
+            <content><![CDATA[
+                <h1>{@title}</h1>
+                <div class="messages">
+                {forums()}
+                {@control}
+                </div>
+            ]]></content>
+            <functions>
+                <item name="forums" data="forums" class="loop" template="ForumItem" />
+            </functions>
+        </template>
+
+        <template name="ForumItem">
+            <param>
+                <item name="item">
+                    <reference name="id"        field="id"           />
+                    <reference name="title"     field="htmlTitle"    />
+                    <reference name="url"       field="defaultUrl"   />
+                    <reference name="author"    field="user_name"     />
+                </item>
+            </param>
+            <content><![CDATA[
+                <div class="message small">
+                    <div class="small info">
+                        <div class="name">{@author}</div>
+                    </div>
+                    <a href="{@url}">{@title}&nbsp;&rarr;</a>
+                </div>
+            ]]></content>
+        </template>
+
+        <template name="GroupList">
+            <param>
+                <item name="groups"/>
+            </param>
+            <content><![CDATA[
+                <h1>Форум</h1>
+                <div class="menuItems">
+                {items()}
+                </div>
+            ]]></content>
+            <functions>
+                <item name="items" data="groups" class="loop" template="GroupItem" />
+            </functions>
+        </template>
+
+        <template name="GroupItem">
+            <param>
+                <item name="item">
+                    <reference name="id"        field="id" />
+                    <reference name="url"       field="id" />
+                    <reference name="title"     field="title" modifiers="html" />
+                </item>
+            </param>
+            <content><![CDATA[
+                <h2><a href="{@url}">{@title}</a></h2>
+            ]]></content>
+        </template>
+
+        <template name="MessageList">
+            <param>
+                <item name="forum">
+                    <reference name="id"        field="id"           />
+                    <reference name="title"     field="title"        />
+                    <reference name="messages"  field="messages"     />
+                    <reference name="control"   field="htmlFoot"     />
+                </item>
+                <item name="bottom"/>
+            </param>
+            <content><![CDATA[
+                <h1>{@title}</h1>
+                <div class="messages">
+                    {items()}
+                    {$bottom}
+                    {@control}
+                </div>
+            ]]></content>
+            <functions>
+                <item name="items" data="forum->messages" class="loop" template="MessageItem" />
+            </functions>
+        </template>
+
+        <template name="MessageItem">
+            <param>
+                <item name="message">
+                    <reference name="id"        field="id"           />
+                    <reference name="text"      field="htmlText"     />
+                    <reference name="author"    field="user_name"    />
+                    <reference name="time"      field="humanTime"    />
+                </item>
+            </param>
+            <content><![CDATA[
+                <div class="message">
+                    <div class="info">
+                        <div class="name">{@author}</div>
+                        <div class="name">{@time}</div>
+                    </div>
+                    {@text}
+                </div>
+                <div style="clear: both"></div>
+            ]]></content>
+        </template>
+
+        <template name="GroupEdit">
+            <param>
+                <item name="group">
+                    <reference name="id"        field="id"           />
+                    <reference name="url"       field="defaultUrl"   />
+                    <reference name="title"     field="htmlTitle"    />
+                    <reference name="storeUrl"  field="storeUrl"     />
+                </item>
+            </param>
+            <content><![CDATA[
+                <h1>{@title}</h1>
+                <form action="{@storeUrl}" method="post">
+                    <input field="text" name="title" value="{@title}"/>
+                    <input field="submit" value="Сохранить"/>
+                </form>
+            ]]></content>
+        </template>
+
+        <template name="ForumEdit">
+            <param>
+                <item name="forum">
+                    <reference name="id"        field="id"           />
+                    <reference name="url"       field="defaultUrl"   />
+                    <reference name="title"     field="htmlTitle"    />
+                    <reference name="message"   field="htmlFirstMessage" />
+                    <reference name="storeUrl"  field="storeUrl"     />
+                    <reference name="groupUrl"  field="groupUrl"     />
+                </item>
+            </param>
+            <content><![CDATA[
+                <h1>{@title}</h1>
+                <form action="{@storeUrl}" method="post">
+                    <h3>Тема:</h3>
+                    <input field="text" name="title" value="{@title}" class="text"/>
+                    <h3>Сообщение:</h3>
+                    <textarea name="message" class="text">{@message}</textarea>
+                    <input field="submit" value="Сохранить"/>
+                    <a href="{@groupUrl}">&larr;Список тем</a>
+                </form>
+            ]]></content>
+        </template>
+
+        <template name="MessageEdit">
+            <param>
+                <item name="message">
+                    <reference name="id"        field="id"           />
+                    <reference name="url"       field="defaultUrl"   />
+                    <reference name="text"      field="text"         />
+                    <reference name="storeUrl"  field="storeUrl"     />
+                </item>
+            </param>
+            <content><![CDATA[
+                <form action="{@storeUrl}" method="post">
+                    <textarea name="message" class="reply">{@text}</textarea>
+                    <input field="submit" value="Добавить ответ" class="button"/>
+                </form>
+            ]]></content>
+        </template>
+
+    </area>
+</TemplateXml>

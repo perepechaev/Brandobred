@@ -1,0 +1,4 @@
+/* IE 7 Hacks */
+
+.corners. .columns, .layout-box { zoom: 1; } /* hasLayout ON */
+.container { margin-bottom: 5px; }

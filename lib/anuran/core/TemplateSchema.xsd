@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+ xmlns:xs="http://www.w3.org/2001/XMLSchema">
+ <xs:element name="TemplateXml" type="TemplateXml"/>
+ <xs:element name="area" type="area"/>
+ <xs:element name="template" type="template"/>
+ <xs:element name="param" type="param"/>
+ <xs:element name="itemParam" type="itemParam"/>
+ <xs:element name="reference" type="reference"/>
+ 
+ <xs:complexType name="TemplateXml">
+  <xs:sequence>
+   <xs:element name="area" type="area" />
+  </xs:sequence>
+ </xs:complexType>
+ 
+ <xs:complexType name="area">
+     <xs:sequence>
+         <xs:element name="template" type="template" maxOccurs="unbounded" minOccurs="0"/>
+     </xs:sequence>
+     <xs:attribute name="name" type="xs:string"></xs:attribute>
+ </xs:complexType>
+
+ <xs:complexType name="template">
+     <xs:sequence>
+         <xs:element name="param" type="param" maxOccurs="1" minOccurs="0"/>
+         <xs:element name="content" type="xs:string" maxOccurs="1" minOccurs="1"/>
+         <xs:element name="functions" type="functions" maxOccurs="1" minOccurs="0"></xs:element>
+     </xs:sequence>
+     <xs:attribute name="name" type="xs:string" use="required"></xs:attribute>
+ </xs:complexType>
+
+ <xs:complexType name="param">
+  <xs:sequence>
+   <xs:element name="item" type="itemParam" maxOccurs="unbounded" minOccurs="0"/>
+  </xs:sequence>
+ </xs:complexType>
+ 
+ <xs:complexType name="itemParam">
+     <xs:sequence>
+         <xs:element name="reference" type="reference" minOccurs="0" maxOccurs="unbounded"/>
+     </xs:sequence>
+     <xs:attribute name="name" type="xs:string"></xs:attribute>
+     <xs:attribute name="field" type="xs:string"></xs:attribute>
+     <xs:attribute name="modifiers" type="xs:string"></xs:attribute>
+ </xs:complexType>
+
+
+ <xs:complexType name="content">
+     <xs:choice>
+         <xs:element name="content" type="xs:string"></xs:element>
+     </xs:choice>
+ </xs:complexType>
+
+ <xs:complexType name="reference">
+     <xs:attribute name="name" type="xs:string"></xs:attribute>
+     <xs:attribute name="field" type="xs:string"></xs:attribute>
+     <xs:attribute name="modifiers" type="xs:string"></xs:attribute>
+ </xs:complexType>
+
+ <xs:complexType name="functions">
+     <xs:sequence>
+         <xs:element name="item" type="itemFunction" maxOccurs="unbounded" minOccurs="0"></xs:element>
+     </xs:sequence>
+ </xs:complexType>
+
+ <xs:complexType name="itemFunction">
+     <xs:attribute name="name" type="xs:string"></xs:attribute>
+     <xs:attribute name="data" type="xs:string"></xs:attribute>
+     <xs:attribute name="class" type="xs:string"></xs:attribute>
+     <xs:attribute name="template" type="xs:string"></xs:attribute>
+     <xs:attribute name="empty" type="xs:string"></xs:attribute>
+     <xs:attribute name="method" type="xs:string"></xs:attribute>
+ </xs:complexType>
+</xs:schema>
